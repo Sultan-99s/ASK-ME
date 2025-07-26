@@ -247,6 +247,8 @@ The system includes comprehensive evaluation metrics:
 
 
 
+### Must answer questions
+
 ### 1. What method or library did you use to extract the text, and why? Did you face any formatting challenges with the PDF content? 
 
 **Primary Method: PyMuPDF (fitz)**
@@ -293,6 +295,6 @@ The system ensures meaningful comparison between questions and document chunks b
 
 The results produced by the system are generally relevant, especially for specific factual queries, due to the use of semantic chunking and multilingual embeddings. The system preserves context and demonstrates effective cross-language understanding. However, further improvements are possible. For longer or more complex documents, topic-based or hierarchical chunking could enhance retrieval accuracy. Using domain-specific, fine-tuned embedding models—particularly for Bengali literature—would likely improve semantic matching. Additionally, expanding the document base and incorporating query expansion techniques, such as synonym handling for Bengali terms, could further increase the relevance and coverage of the system.
 
-
+---
 
 # End of the README.md 
