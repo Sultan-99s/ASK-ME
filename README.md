@@ -310,14 +310,6 @@ rag/
 └── logs/                   # System logs
 ```
 
-## 🔮 Future Enhancements
-
-1. **Advanced Chunking**: Implement semantic chunking with topic modeling
-2. **Fine-tuned Models**: Train domain-specific embeddings for Bengali literature
-3. **Multi-modal Support**: Add image and table extraction capabilities
-4. **Real-time Learning**: Implement feedback-based model improvement
-5. **Scaling**: Add support for distributed vector databases
-6. **Advanced Evaluation**: Implement human evaluation metrics
 
 ## 🤝 Contributing
 
