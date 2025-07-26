@@ -94,9 +94,6 @@ rag/
 │   ├── rag_pipeline.py       # Core RAG implementation
 │   └── evaluation.py         # Evaluation metrics
 ├── data/                   # Data directory
-│   ├── documents/         # Processed documents
-│   ├── vector_db/         # Vector database files
-│   └── models/            # Cached models
 └── logs/                   # System logs
 ```
 
