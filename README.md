@@ -93,7 +93,8 @@ rag/
 │   ├── vector_store.py       # Vector database management
 │   ├── rag_pipeline.py       # Core RAG implementation
 │   └── evaluation.py         # Evaluation metrics
-├── data/                   # Data directory
+├── data/                     # Data directory
+|   └── test_file.pdf  
 └── logs/                   # System logs
 ```
 
