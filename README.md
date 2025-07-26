@@ -221,77 +221,60 @@ print(result['response'])
 
 The system includes comprehensive evaluation metrics:
 
-### Groundedness
-- **Definition**: How well the response is supported by retrieved context
-- **Methods**: Token overlap, semantic similarity, factual claim verification
-- **Score Range**: 0.0 - 1.0
+#### Groundedness
+- **Definition:** How well the response is supported by retrieved context.
+- **Methods:** Token overlap, semantic similarity, factual claim verification.
+- **Score Range:** 0.0 – 1.0
 
-### Relevance
-- **Definition**: How relevant retrieved documents are to the query
-- **Methods**: Retrieval scores, semantic similarity, position weighting
-- **Score Range**: 0.0 - 1.0
+#### Relevance
+- **Definition:** How relevant retrieved documents are to the query.
+- **Methods:** Retrieval scores, semantic similarity, position weighting.
+- **Score Range:** 0.0 – 1.0
 
-### Semantic Similarity
-- **Definition**: Semantic closeness between response and expected answer
-- **Methods**: Cosine similarity of multilingual embeddings
-- **Score Range**: 0.0 - 1.0
+#### Semantic Similarity
+- **Definition:** Semantic closeness between response and expected answer.
+- **Methods:** Cosine similarity of multilingual embeddings.
+- **Score Range:** 0.0 – 1.0
 
-### Additional Metrics
-- **ROUGE Scores**: Overlap-based evaluation (ROUGE-1, ROUGE-2, ROUGE-L)
-- **BLEU Score**: Precision-based evaluation
-- **BERTScore**: Contextual embedding similarity
+#### Additional Metrics
+- **ROUGE Scores:** Overlap-based evaluation (ROUGE-1, ROUGE-2, ROUGE-L).
+- **BLEU Score:** Precision-based evaluation.
+- **BERTScore:** Contextual embedding similarity.
 
+---
 
+## ❓ Must Answer Questions
 
+### 1. What method or library did you use to extract the text, and why? Did you face any formatting challenges with the PDF content?
 
-### Must answer questions
+The primary method for text extraction is PyMuPDF (`fitz`), chosen for its superior handling of complex layouts and Unicode text, which is essential for Bengali documents. Formatting challenges included PDFs with embedded images containing text, which were addressed using Tesseract OCR as a fallback. PyPDF2 was also used for standard PDF extraction. Special care was taken to preserve text structure and handle Bengali character encoding properly.
 
-### 1. What method or library did you use to extract the text, and why? Did you face any formatting challenges with the PDF content? 
+---
 
-**Primary Method: PyMuPDF (fitz)**
-- **Why chosen**: Superior handling of complex layouts and Unicode text, excellent for Bengali script
-- **Challenges faced**: Some PDFs have embedded images with text, handled with OCR fallback
-- **Formatting handling**: Preserves text structure and handles Bengali character encoding properly
+### 2. What chunking strategy did you choose (e.g. paragraph-based, sentence-based, character limit)? Why do you think it works well for semantic retrieval?
 
-**Fallback Methods**:
-- PyPDF2: Standard PDF text extraction
-- OCR (Tesseract): For scanned documents with `ben+eng` language support
+The system uses sentence-aware chunking, with each chunk limited to 500 characters and a 50-character overlap. This strategy preserves semantic boundaries and maintains context, which is crucial for accurate retrieval. Sentence boundaries are detected using NLTK for English and BNLP for Bengali, ensuring language-specific processing. This approach leads to better retrieval accuracy and coherent context preservation.
 
-### 2. Q2: What chunking strategy did you choose (e.g. paragraph-based, sentence-based, character limit)? Why do you think it works well for semantic retrieval?
-
-**Selected Strategy: Sentence-Aware Chunking**
-- **Why effective**: Preserves semantic boundaries while maintaining context
-- **Implementation**: 
-  - Chunk size: 500 characters with 50-character overlap
-  - Respects sentence boundaries using NLTK and BNLP tokenizers
-  - Language-specific sentence detection for Bengali
-- **Benefits**: Better retrieval accuracy and coherent context preservation
+---
 
 ### 3. What embedding model did you use? Why did you choose it? How does it capture the meaning of the text?
 
-**Model: `sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2`**
-- **Why chosen**: 
-  - Optimized for multilingual tasks including Bengali
-  - Good balance between performance and accuracy
-  - Supports semantic similarity across languages
-- **Semantic capture**: Uses transformer-based architecture to understand context and meaning beyond keyword matching
+The embedding model used is `sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2`. It was selected because it is optimized for multilingual tasks, including Bengali, and offers a good balance between performance and accuracy. The transformer-based architecture captures the semantic meaning and context of text, enabling effective cross-language similarity matching.
+
+---
 
 ### 4. How are you comparing the query with your stored chunks? Why did you choose this similarity method and storage setup?
 
-To compare user queries with stored document chunks, the system uses cosine similarity within a multilingual embedding space. Each chunk and query is converted into a dense vector using the selected sentence transformer model. These vectors are stored and managed in a ChromaDB vector database, which supports efficient similarity search using HNSW indexing. Cosine similarity is chosen because it effectively measures the semantic closeness between two pieces of text, regardless of their language or phrasing. ChromaDB provides fast retrieval, persistence, and metadata support, making it suitable for scalable semantic search in a multilingual environment.
+To compare queries with stored document chunks, the system uses cosine similarity within a multilingual embedding space. Both queries and chunks are converted into dense vectors using the sentence transformer model. These vectors are stored in a ChromaDB vector database, which supports efficient similarity search using HNSW indexing. Cosine similarity is effective for measuring semantic closeness, and ChromaDB provides fast retrieval and robust metadata support, making it suitable for scalable semantic search in a multilingual environment.
 
 ---
 
 ### 5. How do you ensure that the question and the document chunks are compared meaningfully? What would happen if the query is vague or missing context?
 
-The system ensures meaningful comparison between questions and document chunks by employing several strategies. First, it detects the language of the query to apply appropriate preprocessing and tokenization. Both queries and chunks are embedded in the same multilingual vector space, allowing for semantic matching beyond simple keyword overlap. The retrieval process uses a context window and conversational memory to maintain relevance across multiple turns. If a query is vague or lacks context, the system relaxes similarity thresholds, applies multiple retrieval strategies (semantic and keyword-based), and uses contextual prompts to guide the language model. If no relevant information is found, the system gracefully responds that the information is not available, ensuring robustness even with incomplete queries.
+Meaningful comparison is ensured by detecting the query language and applying appropriate preprocessing and tokenization. Both queries and chunks are embedded in the same multilingual vector space, allowing for semantic matching beyond simple keyword overlap. The system uses a context window and conversational memory to maintain relevance across multiple turns. If a query is vague or lacks context, similarity thresholds are relaxed, multiple retrieval strategies are applied, and contextual prompts are used to guide the language model. If no relevant information is found, the system responds gracefully that the information is not available.
 
 ---
 
 ### 6. Do the results seem relevant? If not, what might improve them (e.g. better chunking, better embedding model, larger document)?
 
-The results produced by the system are generally relevant, especially for specific factual queries, due to the use of semantic chunking and multilingual embeddings. The system preserves context and demonstrates effective cross-language understanding. However, further improvements are possible. For longer or more complex documents, topic-based or hierarchical chunking could enhance retrieval accuracy. Using domain-specific, fine-tuned embedding models—particularly for Bengali literature—would likely improve semantic matching. Additionally, expanding the document base and incorporating query expansion techniques, such as synonym handling for Bengali terms, could further increase the relevance and coverage of the system.
-
----
-
-# End of the README.md 
+The results are generally relevant, especially for specific factual queries, due to semantic chunking and multilingual embeddings. The system preserves context and demonstrates effective cross-language understanding. Improvements could include topic-based or hierarchical chunking for longer documents, domain-specific fine-tuned embedding models for Bengali literature, expanding the document base, and incorporating query expansion techniques such as synonym handling for Bengali terms.
