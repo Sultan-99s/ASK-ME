@@ -311,34 +311,4 @@ rag/
 ```
 
 
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/new-feature`)
-3. Commit changes (`git commit -am 'Add new feature'`)
-4. Push to branch (`git push origin feature/new-feature`)
-5. Create a Pull Request
-
-## 📄 License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## 📞 Support
-
-For questions or issues:
-- Check the documentation above
-- Review the logs in the `logs/` directory
-- Test with the provided sample queries
-- Consult the API documentation at `/docs`
-
-## 🙏 Acknowledgments
-
-- OpenAI for GPT models
-- Hugging Face for transformer models
-- LangChain community for RAG framework
-- ChromaDB team for vector database
-- BNLP team for Bengali NLP tools
-
----
-
-**Built with ❤️ for multilingual AI systems** 
+# End of the README.md 
