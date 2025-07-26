@@ -205,19 +205,21 @@ python main.pyn.py
 Test the REST API:e REST API:
 ```bash
 curl -X GET "http://localhost:8000/test/sample-queries"l -X GET "http://localhost:8000/test/sample-queries"
-``````
+```
 
-### Custom Testingtom Testing
-```python``python
-from src.rag_pipeline import MultilingualRAGPipelineport MultilingualRAGPipeline
+### Custom Testing
+
+```python
+from src.rag_pipeline import MultilingualRAGPipeline
 
 rag = MultilingualRAGPipeline()AGPipeline()
 result = rag.process_query("your query here")your query here")
 print(result['response'])
 ```
 
+---
 
-### 📊 Evaluation Matrix
+## 📊 Evaluation Matrix
 
 The system includes comprehensive evaluation metrics:
 
@@ -265,16 +267,16 @@ The embedding model used is `sentence-transformers/paraphrase-multilingual-MiniL
 
 ### 4. How are you comparing the query with your stored chunks? Why did you choose this similarity method and storage setup?
 
-To compare queries with stored document chunks, the system uses cosine similarity within a multilingual embedding space. Both queries and chunks are converted into dense vectors using the sentence transformer model. These vectors are stored in a ChromaDB vector database, which supports efficient similarity search using HNSW indexing. Cosine similarity is effective for measuring semantic closeness, and ChromaDB provides fast retrieval and robust metadata support, making it suitable for scalable semantic search in a multilingual environment.
+To compare user queries with stored document chunks, the system uses cosine similarity within a multilingual embedding space. Each chunk and query is converted into a dense vector using the selected sentence transformer model. These vectors are stored and managed in a ChromaDB vector database, which supports efficient similarity search using HNSW indexing. Cosine similarity is chosen because it effectively measures the semantic closeness between two pieces of text, regardless of their language or phrasing. ChromaDB provides fast retrieval, persistence, and metadata support, making it suitable for scalable semantic search in a multilingual environment.
 
 ---
 
 ### 5. How do you ensure that the question and the document chunks are compared meaningfully? What would happen if the query is vague or missing context?
 
-Meaningful comparison is ensured by detecting the query language and applying appropriate preprocessing and tokenization. Both queries and chunks are embedded in the same multilingual vector space, allowing for semantic matching beyond simple keyword overlap. The system uses a context window and conversational memory to maintain relevance across multiple turns. If a query is vague or lacks context, similarity thresholds are relaxed, multiple retrieval strategies are applied, and contextual prompts are used to guide the language model. If no relevant information is found, the system responds gracefully that the information is not available.
+The system ensures meaningful comparison between questions and document chunks by employing several strategies. First, it detects the language of the query to apply appropriate preprocessing and tokenization. Both queries and chunks are embedded in the same multilingual vector space, allowing for semantic matching beyond simple keyword overlap. The retrieval process uses a context window and conversational memory to maintain relevance across multiple turns. If a query is vague or lacks context, the system relaxes similarity thresholds, applies multiple retrieval strategies (semantic and keyword-based), and uses contextual prompts to guide the language model. If no relevant information is found, the system gracefully responds that the information is not available, ensuring robustness even with incomplete queries.
 
 ---
 
 ### 6. Do the results seem relevant? If not, what might improve them (e.g. better chunking, better embedding model, larger document)?
 
-The results are generally relevant, especially for specific factual queries, due to semantic chunking and multilingual embeddings. The system preserves context and demonstrates effective cross-language understanding. Improvements could include topic-based or hierarchical chunking for longer documents, domain-specific fine-tuned embedding models for Bengali literature, expanding the document base, and incorporating query expansion techniques such as synonym handling for Bengali terms.
+The results produced by the system are generally relevant, especially for specific factual queries, due to the use of semantic chunking and multilingual embeddings. The system preserves context and demonstrates effective cross-language understanding. However, further improvements are possible. For longer or more complex documents, topic-based or hierarchical chunking could enhance retrieval accuracy. Using domain-specific, fine-tuned embedding models—particularly for Bengali literature—would likely improve semantic matching. Additionally, expanding the document base and incorporating query expansion techniques, such as synonym handling for Bengali terms, could further increase the relevance and coverage of the system’s responses.
