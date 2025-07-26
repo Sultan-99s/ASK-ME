@@ -13,7 +13,7 @@ from typing import List, Dict, Optional, Union, Tuple
 import unicodedata
 
 # PDF processing libraries
-import fitz  # PyMuPDF - better for complex PDFs
+import fitz  # PyMuPDF 
 import PyPDF2
 from PIL import Image
 import pytesseract
@@ -272,7 +272,7 @@ class DocumentProcessor:
         if language == "bn":
             # Bengali-specific cleaning
             # Remove common OCR artifacts in Bengali
-            text = re.sub(r'[।]+', '।', text)  # Multiple danda to single
+            text = re.sub(r'[।]+', '।', text)  # Normalize danda
             text = re.sub(r'[০-৯]+\s*[।]', '', text)  # Remove page numbers with danda
             
         elif language == "en":
@@ -408,7 +408,7 @@ if __name__ == "__main__":
     processor = DocumentProcessor()
     
     # Test with sample PDF
-    pdf_path = "sample.pdf"
+    pdf_path = "data\অপরিচিতা.pdf"
     if os.path.exists(pdf_path):
         result = processor.process_document(pdf_path)
         

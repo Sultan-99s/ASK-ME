@@ -365,7 +365,7 @@ async def test_sample_queries(pipeline: MultilingualRAGPipeline = Depends(get_ra
             "expected": "মামাকে"
         },
         {
-            "query": "বি বি য়ে য়ে র সময় কল্যাণীর প্রকৃত বয়স কত ছিল?",
+            "query": "বিয়ের সময় কল্যাণীর প্রকৃত বয়স কত ছিল?",
             "expected": "১৫ বছর"
         }
     ]
