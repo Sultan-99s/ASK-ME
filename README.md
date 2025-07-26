@@ -198,7 +198,7 @@ GET /test/sample-queriesample-queries
 
 ## 🧪 Testing and Validationon
 
-### Sample Queries Testing### Sample Queries Testing
+### Sample Queries Testing
 Run the provided test queries:queries:
 ```bash
 python main.pyn.py
@@ -220,7 +220,7 @@ print(result['response'])
 ```
 
 
-## 📊 Evaluation Matrix
+### 📊 Evaluation Matrix
 
 The system includes comprehensive evaluation metrics:
 
